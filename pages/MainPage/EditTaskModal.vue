@@ -14,39 +14,45 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  loading: false
+  loading: false,
 });
 
 const emit = defineEmits<{
   "update:modelValue": [value: boolean];
-  "close": [];
-  "submit": [formData: Omit<Task, 'id' | 'completed' | 'createdAt'>];
+  close: [];
+  submit: [formData: Omit<Task, "id" | "completed" | "createdAt">];
 }>();
 
 const taskStore = useTaskStore();
 
 const isOpen = computed({
   get: () => props.modelValue,
-  set: (value: boolean) => emit("update:modelValue", value)
+  set: (value: boolean) => emit("update:modelValue", value),
 });
 
 const closeModal = () => {
   emit("close");
 };
 
-const handleSubmit = (formData: Omit<Task, 'id' | 'completed' | 'createdAt'>) => {
+const handleSubmit = (
+  formData: Omit<Task, "id" | "completed" | "createdAt">
+) => {
   emit("submit", formData);
 };
 
 const getEditFormFields = () => {
   if (!props.task) return formFields;
 
-  return formFields.map(field => ({
+  return formFields.map((field) => ({
     ...field,
-    value: field.name === 'title' ? props.task?.title :
-           field.name === 'description' ? props.task?.description :
-           field.name === 'date' ? props.task?.date :
-           field.value
+    value:
+      field.name === "title"
+        ? props.task?.title
+        : field.name === "description"
+        ? props.task?.description
+        : field.name === "date"
+        ? props.task?.date
+        : field.value,
   }));
 };
 </script>

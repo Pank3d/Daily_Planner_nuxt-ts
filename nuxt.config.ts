@@ -10,11 +10,19 @@ export default defineNuxtConfig({
     moduleOptions: {
       theme: {
         defaultTheme: 'light'
-      }
+      },
+      styles: false
     },
     vuetifyOptions: {
       icons: {
         defaultSet: 'mdi'
+      }
+    }
+  },
+  vite: {
+    server: {
+      fs: {
+        allow: ['..', '.', 'C:\\Users\\max20']
       }
     }
   },
