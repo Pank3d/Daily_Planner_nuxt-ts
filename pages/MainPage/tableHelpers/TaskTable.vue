@@ -1,40 +1,40 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { BaseTable } from "../../../components/table";
-import { useTaskStore, type Task } from "../../../stores";
-import { taskTableColumns, createTaskTableActions } from "./taskTableHelpers";
+  import { computed } from "vue";
+  import { BaseTable, TableAction } from "../../../components/table";
+  import { useTaskStore, type Task } from "../../../stores";
+  import { taskTableColumns, createTaskTableActions } from "./taskTableHelpers";
 
-interface Props {
-  tasks?: Task[];
-}
+  interface Props {
+    tasks?: Task[];
+  }
 
-const props = withDefaults(defineProps<Props>(), {
-  tasks: () => [],
-});
+  const props = withDefaults(defineProps<Props>(), {
+    tasks: () => [],
+  });
 
-const taskStore = useTaskStore();
+  const taskStore = useTaskStore();
 
-const emit = defineEmits<{
-  "edit-task": [task: Task];
-  "delete-task": [task: Task];
-}>();
+  const emit = defineEmits<{
+    "edit-task": [task: Task];
+    "delete-task": [task: Task];
+  }>();
 
-const columns = taskTableColumns;
+  const columns = taskTableColumns;
 
-const actions = createTaskTableActions(emit);
+  const actions = createTaskTableActions(emit);
 
-const tasks = computed(() => props.tasks || taskStore.tasks);
+  const tasks = computed(() => props.tasks || taskStore.tasks);
 
-const handleItemClick = (task: Task) => {
-  console.log("Клик по задаче:", task);
-};
+  const handleItemClick = (task: unknown) => {
+    console.log("Клик по задаче:", task);
+  };
 </script>
 
 <template>
   <BaseTable
     :items="tasks"
     :columns="columns"
-    :actions="actions"
+    :actions="actions as TableAction<unknown>[]"
     :items-per-page="10"
     no-data-text="Нет задач"
     @item:click="handleItemClick"
@@ -50,14 +50,18 @@ const handleItemClick = (task: Task) => {
     <template #item.title="{ item, value }">
       <div class="d-flex align-center">
         <VIcon
-          :color="item.completed ? 'success' : 'grey'"
+          :color="(item as Task).completed ? 'success' : 'grey'"
           class="me-2"
           size="small"
         >
-          {{ item.completed ? "mdi-check-circle" : "mdi-circle-outline" }}
+          {{
+            (item as Task).completed ? "mdi-check-circle" : "mdi-circle-outline"
+          }}
         </VIcon>
         <span
-          :class="{ 'text-decoration-line-through text-grey': item.completed }"
+          :class="{
+            'text-decoration-line-through text-grey': (item as Task).completed,
+          }"
         >
           {{ value }}
         </span>
@@ -67,7 +71,9 @@ const handleItemClick = (task: Task) => {
     <!-- Кастомный слот для описания -->
     <template #item.description="{ item, value }">
       <span
-        :class="{ 'text-decoration-line-through text-grey': item.completed }"
+        :class="{
+          'text-decoration-line-through text-grey': (item as Task).completed,
+        }"
         class="text-body-2"
       >
         {{ value }}

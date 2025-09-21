@@ -1,2 +1,2 @@
-export * from './TaskTableActions'
-export * from './TaskTableColumns'
+export * from "./TaskTableActions";
+export * from "./TaskTableColumns";

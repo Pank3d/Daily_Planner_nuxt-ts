@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MainPage } from "../pages/MainPage";
+  import { MainPage } from "../pages/MainPage";
 </script>
 
 <template>
@@ -11,11 +11,11 @@ import { MainPage } from "../pages/MainPage";
 </template>
 
 <style scoped>
-.v-container {
-  max-width: 1200px;
-}
+  .v-container {
+    max-width: 1200px;
+  }
 
-.v-main {
-  padding: 20px;
-}
+  .v-main {
+    padding: 20px;
+  }
 </style>

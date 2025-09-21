@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { VBtn } from "vuetify/components";
-import type { ButtonProps } from "./types";
+  import { VBtn } from "vuetify/components";
+  import type { ButtonProps } from "./types";
 
-const props = defineProps<ButtonProps>();
-const emit = defineEmits<{
-  click: [event: MouseEvent];
-}>();
+  const props = defineProps<ButtonProps>();
+  const emit = defineEmits<{
+    click: [event: MouseEvent];
+  }>();
 </script>
 
 <template>

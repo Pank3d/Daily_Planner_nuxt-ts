@@ -5,13 +5,13 @@ export const taskTableColumns: TableColumn[] = [
     key: "title",
     title: "Название",
     sortable: true,
-    width: 250
+    width: 250,
   },
   {
     key: "description",
     title: "Описание",
     sortable: false,
-    width: 300
+    width: 300,
   },
   {
     key: "date",
@@ -19,14 +19,15 @@ export const taskTableColumns: TableColumn[] = [
     sortable: true,
     width: 120,
     align: "center",
-    formatter: (value: string | number | Date) => new Date(value).toLocaleDateString("ru-RU")
+    formatter: (value: string | number | Date) =>
+      new Date(value).toLocaleDateString("ru-RU"),
   },
   {
     key: "completed",
     title: "Статус",
     sortable: true,
     width: 120,
-    align: "center"
+    align: "center",
   },
   {
     key: "createdAt",
@@ -34,6 +35,7 @@ export const taskTableColumns: TableColumn[] = [
     sortable: true,
     width: 140,
     align: "center",
-    formatter: (value: string | number | Date) => new Date(value).toLocaleDateString("ru-RU")
-  }
+    formatter: (value: string | number | Date) =>
+      new Date(value).toLocaleDateString("ru-RU"),
+  },
 ];

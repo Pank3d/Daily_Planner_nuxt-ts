@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { VTextarea } from "vuetify/components";
-import type { TetxAreaProps } from "./types";
+  import { VTextarea } from "vuetify/components";
+  import type { TetxAreaProps } from "./types";
 
-const props = withDefaults(defineProps<TetxAreaProps>(), {
-  rows: 3,
-});
+  const props = withDefaults(defineProps<TetxAreaProps>(), {
+    rows: 3,
+  });
 
-const emit = defineEmits<{
-  "update:modelValue": [value: string];
-}>();
+  const emit = defineEmits<{
+    "update:modelValue": [value: string];
+  }>();
 </script>
 
 <template>

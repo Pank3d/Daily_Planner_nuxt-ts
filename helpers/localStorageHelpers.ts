@@ -10,7 +10,7 @@
  */
 export function getFromLocalStorage<T>(key: string, defaultValue: T): T {
   try {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return defaultValue;
     }
 
@@ -22,7 +22,10 @@ export function getFromLocalStorage<T>(key: string, defaultValue: T): T {
 
     return JSON.parse(item) as T;
   } catch (error) {
-    console.error(`Error getting item from localStorage with key "${key}":`, error);
+    console.error(
+      `Error getting item from localStorage with key "${key}":`,
+      error
+    );
     return defaultValue;
   }
 }
@@ -35,14 +38,17 @@ export function getFromLocalStorage<T>(key: string, defaultValue: T): T {
  */
 export function setToLocalStorage<T>(key: string, value: T): boolean {
   try {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return false;
     }
 
     localStorage.setItem(key, JSON.stringify(value));
     return true;
   } catch (error) {
-    console.error(`Error setting item to localStorage with key "${key}":`, error);
+    console.error(
+      `Error setting item to localStorage with key "${key}":`,
+      error
+    );
     return false;
   }
 }
@@ -54,14 +60,17 @@ export function setToLocalStorage<T>(key: string, value: T): boolean {
  */
 export function removeFromLocalStorage(key: string): boolean {
   try {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return false;
     }
 
     localStorage.removeItem(key);
     return true;
   } catch (error) {
-    console.error(`Error removing item from localStorage with key "${key}":`, error);
+    console.error(
+      `Error removing item from localStorage with key "${key}":`,
+      error
+    );
     return false;
   }
 }
@@ -72,14 +81,14 @@ export function removeFromLocalStorage(key: string): boolean {
  */
 export function clearLocalStorage(): boolean {
   try {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return false;
     }
 
     localStorage.clear();
     return true;
   } catch (error) {
-    console.error('Error clearing localStorage:', error);
+    console.error("Error clearing localStorage:", error);
     return false;
   }
 }
@@ -91,13 +100,16 @@ export function clearLocalStorage(): boolean {
  */
 export function hasInLocalStorage(key: string): boolean {
   try {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return false;
     }
 
     return localStorage.getItem(key) !== null;
   } catch (error) {
-    console.error(`Error checking if key "${key}" exists in localStorage:`, error);
+    console.error(
+      `Error checking if key "${key}" exists in localStorage:`,
+      error
+    );
     return false;
   }
 }

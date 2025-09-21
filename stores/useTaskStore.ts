@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
-import { getFromLocalStorage, setToLocalStorage } from '../helpers';
+import { defineStore } from "pinia";
+import { computed, ref } from "vue";
+import { getFromLocalStorage, setToLocalStorage } from "../helpers";
 
 // Task interface
 export interface Task {
@@ -13,15 +13,15 @@ export interface Task {
 }
 
 // Store key for localStorage
-const TASKS_STORAGE_KEY = 'daily-planner-tasks';
+const TASKS_STORAGE_KEY = "daily-planner-tasks";
 
 // Generate unique ID from date and title
 const generateTaskId = (title: string, date: Date): string => {
-  const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD format
+  const dateStr = date.toISOString().split("T")[0]; // YYYY-MM-DD format
   const titleSlug = title
     .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, '') // Remove special characters
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/[^a-z0-9\s]/g, "") // Remove special characters
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
     .substring(0, 20); // Limit length
 
   const timestamp = Date.now(); // Add timestamp for uniqueness
@@ -29,7 +29,7 @@ const generateTaskId = (title: string, date: Date): string => {
   return `${dateStr}-${titleSlug}-${timestamp}`;
 };
 
-export const useTaskStore = defineStore('tasks', () => {
+export const useTaskStore = defineStore("tasks", () => {
   // State
   const tasks = ref<Task[]>([]);
   const isLoaded = ref(false);
@@ -43,7 +43,7 @@ export const useTaskStore = defineStore('tasks', () => {
     tasks.value = storedTasks.map(task => ({
       ...task,
       date: new Date(task.date),
-      createdAt: new Date(task.createdAt)
+      createdAt: new Date(task.createdAt),
     }));
 
     isLoaded.value = true;
@@ -77,14 +77,14 @@ export const useTaskStore = defineStore('tasks', () => {
 
   const todayTasks = computed(() => {
     const today = new Date();
-    return allTasks.value.filter(task =>
-      task.date.toDateString() === today.toDateString()
+    return allTasks.value.filter(
+      task => task.date.toDateString() === today.toDateString()
     );
   });
 
   const getTasksForDate = (date: Date) => {
-    return allTasks.value.filter(task =>
-      task.date.toDateString() === date.toDateString()
+    return allTasks.value.filter(
+      task => task.date.toDateString() === date.toDateString()
     );
   };
 
@@ -93,7 +93,9 @@ export const useTaskStore = defineStore('tasks', () => {
   };
 
   // Actions
-  const addTask = (taskData: Omit<Task, 'id' | 'completed' | 'createdAt'>): Task => {
+  const addTask = (
+    taskData: Omit<Task, "id" | "completed" | "createdAt">
+  ): Task => {
     init();
 
     const newTask: Task = {
@@ -102,7 +104,7 @@ export const useTaskStore = defineStore('tasks', () => {
       description: taskData.description,
       date: taskData.date,
       completed: false,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
     tasks.value.push(newTask);
@@ -111,7 +113,10 @@ export const useTaskStore = defineStore('tasks', () => {
     return newTask;
   };
 
-  const updateTask = (id: string, updates: Partial<Omit<Task, 'id'>>): Task | null => {
+  const updateTask = (
+    id: string,
+    updates: Partial<Omit<Task, "id">>
+  ): Task | null => {
     init();
 
     const taskIndex = tasks.value.findIndex(task => task.id === id);
@@ -194,6 +199,6 @@ export const useTaskStore = defineStore('tasks', () => {
     // Utility
     loadTasksFromStorage,
     saveTasksToStorage,
-    init
+    init,
   };
 });

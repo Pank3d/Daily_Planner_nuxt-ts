@@ -1,68 +1,70 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { VTextField, VMenu, VDatePicker } from "vuetify/components";
+  import { ref, computed } from "vue";
+  import { VTextField, VMenu, VDatePicker } from "vuetify/components";
 
-import type { DatePickerProps } from "./types";
+  import type { DatePickerProps } from "./types";
 
-const props = withDefaults(defineProps<DatePickerProps>(), {
-  format: 'DD.MM.YYYY',
-  disablePastDates: false
-});
+  const props = withDefaults(defineProps<DatePickerProps>(), {
+    format: "DD.MM.YYYY",
+    disablePastDates: false,
+  });
 
-const emit = defineEmits<{
-  'update:modelValue': [value: string | Date | null];
-}>();
+  const emit = defineEmits<{
+    "update:modelValue": [value: string | Date | null];
+  }>();
 
-const menu = ref(false);
+  const menu = ref(false);
 
-const formattedValue = computed(() => {
-  if (!props.modelValue) return '';
+  const formattedValue = computed(() => {
+    if (!props.modelValue) return "";
 
-  if (props.modelValue instanceof Date) {
-    return formatDate(props.modelValue);
-  }
+    if (props.modelValue instanceof Date) {
+      return formatDate(props.modelValue);
+    }
 
-  return props.modelValue;
-});
+    return props.modelValue;
+  });
 
-const formatDate = (date: Date): string => {
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const year = date.getFullYear();
+  const formatDate = (date: Date): string => {
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
 
-  switch (props.format) {
-    case 'MM/DD/YYYY':
-      return `${month}/${day}/${year}`;
-    case 'YYYY-MM-DD':
-      return `${year}-${month}-${day}`;
-    case 'DD.MM.YYYY':
-    default:
-      return `${day}.${month}.${year}`;
-  }
-};
+    switch (props.format) {
+      case "MM/DD/YYYY":
+        return `${month}/${day}/${year}`;
+      case "YYYY-MM-DD":
+        return `${year}-${month}-${day}`;
+      case "DD.MM.YYYY":
+      default:
+        return `${day}.${month}.${year}`;
+    }
+  };
 
-const handleDateSelect = (date: string | Date | null) => {
-  if (!date) {
-    emit('update:modelValue', null);
-  } else {
-    const selectedDate = date instanceof Date ? date : new Date(date);
-    emit('update:modelValue', selectedDate);
-  }
-  menu.value = false;
-};
+  const handleDateSelect = (date: string | Date | null) => {
+    if (!date) {
+      emit("update:modelValue", null);
+    } else {
+      const selectedDate = date instanceof Date ? date : new Date(date);
+      emit("update:modelValue", selectedDate);
+    }
+    menu.value = false;
+  };
 
-const closeMenu = () => {
-  menu.value = false;
-};
+  const closeMenu = () => {
+    menu.value = false;
+  };
 
-const computedMinDate = computed(() => {
-  if (props.disablePastDates) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return props.minDate ? new Date(Math.max(today.getTime(), new Date(props.minDate).getTime())) : today;
-  }
-  return props.minDate;
-});
+  const computedMinDate = computed(() => {
+    if (props.disablePastDates) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return props.minDate
+        ? new Date(Math.max(today.getTime(), new Date(props.minDate).getTime()))
+        : today;
+    }
+    return props.minDate;
+  });
 </script>
 
 <template>

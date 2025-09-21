@@ -7,7 +7,9 @@ interface TaskTableEmit {
   (event: "delete-task", task: Task): void;
 }
 
-export const createTaskTableActions = (emit: TaskTableEmit): TableAction<Task>[] => {
+export const createTaskTableActions = (
+  emit: TaskTableEmit
+): TableAction<Task>[] => {
   const taskStore = useTaskStore();
 
   return [
@@ -18,7 +20,7 @@ export const createTaskTableActions = (emit: TaskTableEmit): TableAction<Task>[]
       handler: (task: Task) => {
         taskStore.toggleTaskCompletion(task.id);
       },
-      show: (task: Task) => !task.completed
+      show: (task: Task) => !task.completed,
     },
     {
       icon: "mdi-undo",
@@ -27,7 +29,7 @@ export const createTaskTableActions = (emit: TaskTableEmit): TableAction<Task>[]
       handler: (task: Task) => {
         taskStore.toggleTaskCompletion(task.id);
       },
-      show: (task: Task) => task.completed
+      show: (task: Task) => task.completed,
     },
     {
       icon: "mdi-pencil",
@@ -35,7 +37,7 @@ export const createTaskTableActions = (emit: TaskTableEmit): TableAction<Task>[]
       tooltip: "Редактировать",
       handler: (task: Task) => {
         emit("edit-task", task);
-      }
+      },
     },
     {
       icon: "mdi-delete",
@@ -43,7 +45,7 @@ export const createTaskTableActions = (emit: TaskTableEmit): TableAction<Task>[]
       tooltip: "Удалить",
       handler: (task: Task) => {
         emit("delete-task", task);
-      }
-    }
+      },
+    },
   ];
 };

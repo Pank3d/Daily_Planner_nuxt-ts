@@ -9,7 +9,7 @@ export interface DatePickerProps {
   rules?: ValidationRule[];
   modelValue?: string | Date | null;
   errorMessages?: string;
-  format?: 'DD.MM.YYYY' | 'MM/DD/YYYY' | 'YYYY-MM-DD';
+  format?: "DD.MM.YYYY" | "MM/DD/YYYY" | "YYYY-MM-DD";
   minDate?: string | Date;
   maxDate?: string | Date;
   disabledDates?: string[] | Date[] | ((date: Date) => boolean);

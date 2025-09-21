@@ -108,10 +108,10 @@ const getVisibleActions = (item: unknown) => {
       <slot
         :name="`item.${column.key}`"
         :item="item"
-        :value="item[column.key]"
-        :formatted-value="formatCellValue(item, column)"
+        :value="(item as Record<string, unknown>)[column.key]"
+        :formatted-value="formatCellValue(item as Record<string, unknown>, column)"
       >
-        {{ formatCellValue(item, column) }}
+        {{ formatCellValue(item as Record<string, unknown>, column) }}
       </slot>
     </template>
 

@@ -1,33 +1,38 @@
 <script setup lang="ts">
-import { VDialog, VCard, VCardTitle, VCardText, VCardActions } from "vuetify/components";
-import type { BaseModalProps } from "./types";
-import BaseButton from "../button/BaseButton.vue";
+  import {
+    VDialog,
+    VCard,
+    VCardTitle,
+    VCardText,
+    VCardActions,
+  } from "vuetify/components";
+  import type { BaseModalProps } from "./types";
+  import BaseButton from "../button/BaseButton.vue";
 
+  const props = withDefaults(defineProps<BaseModalProps>(), {
+    maxWidth: "500px",
+    persistent: false,
+    scrollable: false,
+    fullscreen: false,
+    hideOverlay: false,
+    closeOnBackClick: true,
+    showCloseButton: true,
+  });
 
-const props = withDefaults(defineProps<BaseModalProps>(), {
-  maxWidth: '500px',
-  persistent: false,
-  scrollable: false,
-  fullscreen: false,
-  hideOverlay: false,
-  closeOnBackClick: true,
-  showCloseButton: true
-});
+  const emit = defineEmits<{
+    "update:modelValue": [value: boolean];
+    close: [];
+    confirm: [];
+  }>();
 
-const emit = defineEmits<{
-  'update:modelValue': [value: boolean];
-  close: [];
-  confirm: [];
-}>();
+  const closeModal = () => {
+    emit("update:modelValue", false);
+    emit("close");
+  };
 
-const closeModal = () => {
-  emit('update:modelValue', false);
-  emit('close');
-};
-
-const confirmAction = () => {
-  emit('confirm');
-};
+  const confirmAction = () => {
+    emit("confirm");
+  };
 </script>
 
 <template>
@@ -43,7 +48,10 @@ const confirmAction = () => {
     :class="customClass"
   >
     <v-card>
-      <v-card-title v-if="title || showCloseButton" class="d-flex justify-space-between align-center">
+      <v-card-title
+        v-if="title || showCloseButton"
+        class="d-flex justify-space-between align-center"
+      >
         <span>{{ title }}</span>
         <BaseButton
           v-if="showCloseButton"

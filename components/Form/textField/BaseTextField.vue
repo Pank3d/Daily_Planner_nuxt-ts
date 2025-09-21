@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { VTextField } from "vuetify/components";
-import type { TextFieldProps } from "./types";
+  import { VTextField } from "vuetify/components";
+  import type { TextFieldProps } from "./types";
 
-const props = withDefaults(defineProps<TextFieldProps>(), {
-  type: "text",
-});
+  const props = withDefaults(defineProps<TextFieldProps>(), {
+    type: "text",
+  });
 
-const emit = defineEmits<{
-  "update:modelValue": [value: string];
-}>();
+  const emit = defineEmits<{
+    "update:modelValue": [value: string];
+  }>();
 </script>
 
 <template>

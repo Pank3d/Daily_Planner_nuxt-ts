@@ -26,4 +26,4 @@ export const formFields: FormField[] = [
     required: true,
     placeholder: "Введите описание задачи",
   },
-]; 
+];

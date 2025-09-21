@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { VSelect } from "vuetify/components";
-import type { SelectProps } from "./types";
+  import { VSelect } from "vuetify/components";
+  import type { SelectProps } from "./types";
 
-const props = defineProps<SelectProps>();
+  const props = defineProps<SelectProps>();
 
-const emit = defineEmits<{
-  "update:modelValue": [value: unknown];
-}>();
+  const emit = defineEmits<{
+    "update:modelValue": [value: unknown];
+  }>();
 </script>
 
 <template>

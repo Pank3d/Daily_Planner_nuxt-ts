@@ -4,15 +4,21 @@ export interface FormProps {
   loading?: boolean;
 }
 
-
 export interface ValidationRule {
-  (value: unknown): boolean | string
+  (value: unknown): boolean | string;
 }
 
 export interface FormField {
   name: string;
   label: string;
-  type: "text" | "email" | "password" | "textarea" | "select" | "checkbox" | "datepicker";
+  type:
+    | "text"
+    | "email"
+    | "password"
+    | "textarea"
+    | "select"
+    | "checkbox"
+    | "datepicker";
   value: unknown;
   required?: boolean;
   disabled?: boolean;
@@ -25,7 +31,7 @@ export interface FormField {
   validationMessage?: string;
   // DatePicker specific props
   disablePastDates?: boolean;
-  format?: 'DD.MM.YYYY' | 'MM/DD/YYYY' | 'YYYY-MM-DD';
+  format?: "DD.MM.YYYY" | "MM/DD/YYYY" | "YYYY-MM-DD";
   minDate?: string | Date;
   maxDate?: string | Date;
 }

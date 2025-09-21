@@ -1,1 +1,1 @@
-export * from './localStorageHelpers'
+export * from "./localStorageHelpers";
