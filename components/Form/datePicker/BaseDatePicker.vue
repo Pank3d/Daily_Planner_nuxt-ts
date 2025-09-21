@@ -41,9 +41,13 @@ const formatDate = (date: Date): string => {
   }
 };
 
-const handleDateSelect = (date: string) => {
-  const selectedDate = new Date(date);
-  emit('update:modelValue', selectedDate);
+const handleDateSelect = (date: string | Date | null) => {
+  if (!date) {
+    emit('update:modelValue', null);
+  } else {
+    const selectedDate = date instanceof Date ? date : new Date(date);
+    emit('update:modelValue', selectedDate);
+  }
   menu.value = false;
 };
 

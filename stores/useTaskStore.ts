@@ -111,7 +111,7 @@ export const useTaskStore = defineStore('tasks', () => {
     return newTask;
   };
 
-  const updateTask = (id: string, updates: Partial<Task>): Task | null => {
+  const updateTask = (id: string, updates: Partial<Omit<Task, 'id'>>): Task | null => {
     init();
 
     const taskIndex = tasks.value.findIndex(task => task.id === id);
@@ -121,10 +121,14 @@ export const useTaskStore = defineStore('tasks', () => {
       return null;
     }
 
-    tasks.value[taskIndex] = { ...tasks.value[taskIndex], ...updates };
-    saveTasksToStorage();
+    const currentTask = tasks.value[taskIndex];
+    if (currentTask) {
+      tasks.value[taskIndex] = { ...currentTask, ...updates };
+      saveTasksToStorage();
+      return tasks.value[taskIndex];
+    }
 
-    return tasks.value[taskIndex];
+    return null;
   };
 
   const deleteTask = (id: string): boolean => {

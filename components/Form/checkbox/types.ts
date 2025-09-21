@@ -6,6 +6,6 @@ export interface CheckboxProps {
   label: string;
   disabled?: boolean;
   rules?: ValidationRule[];
-  modelValue?: boolean;
+  modelValue?: boolean | null;
   errorMessages?: string;
 }

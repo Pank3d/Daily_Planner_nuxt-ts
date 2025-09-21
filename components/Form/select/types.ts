@@ -4,7 +4,7 @@ export interface ValidationRule {
 
 export interface SelectOption {
   label: string;
-  value: any;
+  value: unknown;
 }
 
 export interface SelectProps {
@@ -12,6 +12,6 @@ export interface SelectProps {
   items: SelectOption[];
   disabled?: boolean;
   rules?: ValidationRule[];
-  modelValue?: any;
+  modelValue?: unknown;
   errorMessages?: string;
 }

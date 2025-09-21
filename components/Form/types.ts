@@ -6,7 +6,7 @@ export interface FormProps {
 
 
 export interface ValidationRule {
-  (value: unknown): boolean
+  (value: unknown): boolean | string
 }
 
 export interface FormField {

@@ -6,7 +6,7 @@ import { BaseButton } from "../../components/button";
 import { BaseModal } from "../../components/modal";
 import { BaseForm } from "../../components/Form";
 import { BaseDatePicker } from "../../components/Form/datePicker";
-import { Task, useTaskStore } from "../../stores";
+import { useTaskStore, type Task } from "../../stores";
 
 import {
   formFields,
@@ -79,8 +79,14 @@ const filteredTasks = computed(() => {
   return store.tasks.filter(task => task.date >= filterDate);
 });
 
-const handleDateFilter = (date: string | null) => {
-  selectedDate.value = date;
+const handleDateFilter = (date: string | Date | null) => {
+  if (date instanceof Date) {
+    selectedDate.value = date.toISOString().split('T')[0];
+  } else if (typeof date === 'string') {
+    selectedDate.value = date;
+  } else {
+    selectedDate.value = null;
+  }
 };
 </script>
 

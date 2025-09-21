@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { VCheckbox } from "vuetify/components";
-import { CheckboxProps } from "./types";
+import type { CheckboxProps } from "./types";
 
 const props = defineProps<CheckboxProps>();
 
 const emit = defineEmits<{
-  "update:modelValue": [value: boolean];
+  "update:modelValue": [value: boolean | null];
 }>();
 </script>
 

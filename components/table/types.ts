@@ -4,21 +4,21 @@ export interface TableColumn {
   sortable?: boolean;
   width?: string | number;
   align?: "start" | "center" | "end";
-  formatter?: (value: any) => string;
+  formatter?: (value: unknown) => string;
 }
 
-export interface TableAction {
+export interface TableAction<T = unknown> {
   icon: string;
   color?: string;
   tooltip?: string;
-  handler: (item: any) => void;
-  show?: (item: any) => boolean;
+  handler: (item: T) => void;
+  show?: (item: T) => boolean;
 }
 
-export interface TableProps {
-  items: any[];
+export interface TableProps<T = unknown> {
+  items: T[];
   columns: TableColumn[];
-  actions?: TableAction[];
+  actions?: TableAction<T>[];
   loading?: boolean;
   itemsPerPage?: number;
   showSelect?: boolean;
@@ -32,10 +32,15 @@ export interface TableProps {
   itemValue?: string;
 }
 
-export interface TableEmits {
-  "update:selected": [items: any[]];
-  "item:click": [item: any];
-  "update:sortBy": [sortBy: any[]];
+export interface SortByItem {
+  key: string;
+  order?: "asc" | "desc";
+}
+
+export interface TableEmits<T = unknown> {
+  "update:selected": [items: T[]];
+  "item:click": [item: T];
+  "update:sortBy": [sortBy: SortByItem[]];
   "update:page": [page: number];
   "update:itemsPerPage": [itemsPerPage: number];
 }

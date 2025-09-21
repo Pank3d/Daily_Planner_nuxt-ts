@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { VDataTable, VBtn, VIcon, VTooltip } from "vuetify/components";
-import type { TableProps, TableEmits, TableColumn, TableAction } from "./types";
+import type { TableProps, TableEmits, TableColumn, TableAction, SortByItem } from "./types";
 
-const props = withDefaults(defineProps<TableProps>(), {
+const props = withDefaults(defineProps<TableProps<unknown>>(), {
   loading: false,
   itemsPerPage: 10,
   showSelect: false,
@@ -14,10 +14,10 @@ const props = withDefaults(defineProps<TableProps>(), {
   itemValue: "id",
 });
 
-const emit = defineEmits<TableEmits>();
+const emit = defineEmits<TableEmits<unknown>>();
 
-const selected = ref<any[]>([]);
-const sortBy = ref<any[]>([]);
+const selected = ref<unknown[]>([]);
+const sortBy = ref<SortByItem[]>([]);
 const page = ref(1);
 
 const headers = computed(() => {
@@ -42,16 +42,16 @@ const headers = computed(() => {
   return baseHeaders;
 });
 
-const handleUpdateSelected = (items: any[]) => {
+const handleUpdateSelected = (items: unknown[]) => {
   selected.value = items;
   emit("update:selected", items);
 };
 
-const handleItemClick = (event: any, item: any) => {
+const handleItemClick = (event: unknown, item: { item: unknown }) => {
   emit("item:click", item.item);
 };
 
-const handleUpdateSortBy = (newSortBy: any[]) => {
+const handleUpdateSortBy = (newSortBy: SortByItem[]) => {
   sortBy.value = newSortBy;
   emit("update:sortBy", newSortBy);
 };
@@ -65,12 +65,12 @@ const handleUpdateItemsPerPage = (newItemsPerPage: number) => {
   emit("update:itemsPerPage", newItemsPerPage);
 };
 
-const formatCellValue = (item: any, column: TableColumn) => {
+const formatCellValue = (item: Record<string, unknown>, column: TableColumn) => {
   const value = item[column.key];
   return column.formatter ? column.formatter(value) : value;
 };
 
-const getVisibleActions = (item: any) => {
+const getVisibleActions = (item: unknown) => {
   return props.actions?.filter(action => !action.show || action.show(item)) || [];
 };
 </script>

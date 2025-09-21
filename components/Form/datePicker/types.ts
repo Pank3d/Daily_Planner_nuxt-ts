@@ -1,5 +1,5 @@
 export interface ValidationRule {
-  (value: any): boolean | string;
+  (value: unknown): boolean | string;
 }
 
 export interface DatePickerProps {

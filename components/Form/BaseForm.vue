@@ -15,7 +15,7 @@ const emit = defineEmits(["submit", "fieldChange"]);
 
 const form = ref<VForm | null>(null);
 const valid = ref(false);
-const fieldValues = ref<Record<string, any>>({});
+const fieldValues = ref<Record<string, unknown>>({});
 
 // Initialize field values
 props.fields.forEach((field) => {
@@ -26,20 +26,20 @@ const getValidationRules = (field: FormField): ValidationRule[] => {
   const rules: ValidationRule[] = [];
 
   if (field.required) {
-    rules.push((value: any) => {
+    rules.push((value: unknown) => {
       if (field.type === "checkbox") {
         return value === true || "This field is required";
       }
       if (field.type === "datepicker") {
         return !!value || "This field is required";
       }
-      return (value && value.length > 0) || "This field is required";
+      return (value && typeof value === 'string' && value.length > 0) || (Array.isArray(value) && value.length > 0) || "This field is required";
     });
   }
 
   if (field.type === "email") {
-    rules.push((value: string) => {
-      if (!value) return true;
+    rules.push((value: unknown) => {
+      if (!value || typeof value !== 'string') return true;
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailPattern.test(value) || "Please enter a valid email address";
     });
@@ -52,7 +52,7 @@ const getValidationRules = (field: FormField): ValidationRule[] => {
   return rules;
 };
 
-const handleFieldChange = (fieldName: string, value: any) => {
+const handleFieldChange = (fieldName: string, value: unknown) => {
   fieldValues.value[fieldName] = value;
   emit("fieldChange", fieldName, value);
 };

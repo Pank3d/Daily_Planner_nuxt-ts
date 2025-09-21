@@ -5,7 +5,7 @@ import type { SelectProps } from "./types";
 const props = defineProps<SelectProps>();
 
 const emit = defineEmits<{
-  "update:modelValue": [value: any];
+  "update:modelValue": [value: unknown];
 }>();
 </script>
 
