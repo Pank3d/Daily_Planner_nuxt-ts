@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { BaseTable } from "../../components/table";
-import type { TableColumn, TableAction } from "../../components/table";
-import { useTaskStore, type Task } from "../../stores";
+import { BaseTable } from "../../../components/table";
+import type { TableColumn, TableAction } from "../../../components/table";
+import { useTaskStore, type Task } from "../../../stores";
+
+interface Props {
+  tasks?: Task[];
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  tasks: [],
+});
 
 const taskStore = useTaskStore();
 
@@ -30,7 +38,7 @@ const columns: TableColumn[] = [
     sortable: true,
     width: 120,
     align: "center",
-    formatter: (value) => new Date(value).toLocaleDateString("ru-RU")
+    formatter: (value: string | number | Date) => new Date(value).toLocaleDateString("ru-RU")
   },
   {
     key: "completed",
@@ -45,7 +53,7 @@ const columns: TableColumn[] = [
     sortable: true,
     width: 140,
     align: "center",
-    formatter: (value) => new Date(value).toLocaleDateString("ru-RU")
+    formatter: (value: string | number | Date) => new Date(value).toLocaleDateString("ru-RU")
   }
 ];
 
@@ -86,7 +94,7 @@ const actions: TableAction[] = [
   }
 ];
 
-const tasks = computed(() => taskStore.tasks);
+const tasks = computed(() => props.tasks || taskStore.tasks);
 
 const handleItemClick = (task: Task) => {
   console.log("Клик по задаче:", task);

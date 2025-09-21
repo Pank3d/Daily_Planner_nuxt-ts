@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { BaseModal } from "../../components/modal";
-import { BaseForm } from "../../components/Form";
-import { BaseDatePicker } from "../../components/Form/datePicker";
-import { BaseButton } from "../../components/button";
-import { useTaskStore, type Task } from "../../stores";
+import { BaseModal } from "../../../components/modal";
+import { BaseForm } from "../../../components/Form";
+import { BaseDatePicker } from "../../../components/Form/datePicker";
+import { BaseButton } from "../../../components/button";
+import { useTaskStore, type Task } from "../../../stores";
 import { formFields } from "./fields";
 
 interface Props {

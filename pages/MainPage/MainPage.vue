@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { VContainer, VRow, VCol } from "vuetify/components";
 
 import { BaseButton } from "../../components/button";
@@ -8,10 +8,13 @@ import { BaseForm } from "../../components/Form";
 import { BaseDatePicker } from "../../components/Form/datePicker";
 import { Task, useTaskStore } from "../../stores";
 
-import { formFields } from "./fields";
-import TaskTable from "./TaskTable.vue";
-import EditTaskModal from "./EditTaskModal.vue";
-import DeleteTaskModal from "./DeleteTaskModal.vue";
+import {
+  formFields,
+  TaskTable,
+  EditTaskModal,
+  DeleteTaskModal,
+  FilterByDate
+} from "./tableHelpers";
 
 const isModalOpen = ref(false);
 const isEditModalOpen = ref(false);
@@ -19,6 +22,7 @@ const isDeleteModalOpen = ref(false);
 const isLoading = ref(false);
 const editingTask = ref<Task | null>(null);
 const deletingTask = ref<Task | null>(null);
+const selectedDate = ref<string | null>(null);
 const store = useTaskStore();
 
 const openModal = () => {
@@ -52,7 +56,6 @@ const closeDeleteModal = () => {
 const handleSubmit = async (formData: Omit<Task, 'id' | 'completed' | 'createdAt'>) => {
   store.addTask(formData)
   closeModal()
-  console.log(store.tasks)
 };
 
 const handleEditSubmit = async (formData: Omit<Task, 'id' | 'completed' | 'createdAt'>) => {
@@ -66,6 +69,19 @@ const handleDeleteConfirm = async (task: Task) => {
   store.deleteTask(task.id);
   closeDeleteModal();
 };
+
+const filteredTasks = computed(() => {
+  if (!selectedDate.value) {
+    return store.tasks;
+  }
+
+  const filterDate = new Date(selectedDate.value);
+  return store.tasks.filter(task => task.date >= filterDate);
+});
+
+const handleDateFilter = (date: string | null) => {
+  selectedDate.value = date;
+};
 </script>
 
 <template>
@@ -78,10 +94,13 @@ const handleDeleteConfirm = async (task: Task) => {
       </v-col>
     </v-row>
 
+    <FilterByDate @date-changed="handleDateFilter" />
+
     <v-row>
       <v-col cols="12">
         <h1>Daily Planner</h1>
         <TaskTable
+          :tasks="filteredTasks"
           @edit-task="openEditModal"
           @delete-task="openDeleteModal"
         />

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { BaseModal } from "../../components/modal";
-import { BaseButton } from "../../components/button";
-import type { Task } from "../../stores";
+import { BaseModal } from "../../../components/modal";
+import { BaseButton } from "../../../components/button";
+import type { Task } from "../../../stores";
 
 interface Props {
   modelValue: boolean;
